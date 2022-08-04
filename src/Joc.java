@@ -1,5 +1,10 @@
 public class Joc {
     private String numeJoc;
+    private double pret;
+    private String date;
+    private String tipDeJoc;
+
+    static String[] posibilTipDeJoc = {"RPG", "RTS", "FPS", "JDF"};
 
     public String getNumeJoc() {
         return numeJoc;
@@ -33,15 +38,13 @@ public class Joc {
         for (String tdjiterator : posibilTipDeJoc) {
             if (tdjParam.equals(tdjiterator)) {
                 tipDeJoc = tdjParam;
+                break;
             }
         }
+        if (tipDeJoc==null) {
+            System.out.println("Game type not valid. Please retry");
+        }
     }
-
-    private double pret;
-    private String date;
-    private String tipDeJoc;
-
-    static String[] posibilTipDeJoc = {"RPG", "RTS", "FPS", "JDF"};
 
 
 }

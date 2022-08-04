@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Biblioteca {
@@ -7,38 +8,62 @@ public class Biblioteca {
 
 
     void addGame(Joc j) {
-        String full = "False";
-        for (int i = 0; i < jocuri.length; i++) {
-            if (jocuri[i] == null) {
-                jocuri[i] = j;
-                break;
-            } else if (jocuri[i] != null && jocuri[i] == jocuri[jocuri.length - 1]) {
-                System.out.println("Game library exceeds capacity. Building new library...");
-                full = "True";
-            }
-        }
-        if (full.equals("True")) {
-            Joc[] temp = new Joc[jocuri.length * 2];
-            jocuri = temp;
-        }
+        boolean full = false;
 
+        if (j.getTipDeJoc() == null) {
+            System.out.println("Game does not meet minimum standard requirements to be posted.");
+            j.setNumeJoc("DeleteThis");
+            removeWrong("DeleteThis");
+        } else {
+            for (int i = 0; i < jocuri.length; i++) {
+                if (jocuri[i] == null) {
+                    jocuri[i] = j;
+                    break;
+                }
+            }
+            if (jocuri[jocuri.length - 1] != null) {
+                System.out.println("Game library exceeds capacity. Building new library...");
+                full = true;
+            }
+
+            if (full) {
+                Joc[] temp = new Joc[jocuri.length * 2];
+                jocuri = temp;
+            }
+
+        }
     }
 
-
-    void remove(String gameToRemove) {
-        gameToRemove = keyboard.next();
+    void removeWrong(String gTR) {
         for (int i = 0; i < jocuri.length; i++) {
-            if (jocuri[i].getNumeJoc().equals(gameToRemove)) {
+            if ((jocuri[i].getNumeJoc()).equals(gTR)) {
                 jocuri[i] = null;
-                try {
-                    for (int j = 0; j < jocuri.length; j++) {
-                        if (jocuri[j] == null) {
-                            jocuri[j] = jocuri[j + 1];
-                        }
+
+
+                for (int j = 0; j < jocuri.length; j++) {
+                    if (jocuri[j] == null) {
+                        jocuri[j] = jocuri[j + 1];
                     }
-                } catch (NullPointerException e) {
-                    System.out.println("Index has multiple empty spaces. NPE caught.");
                 }
+
+                break;
+
+            }
+        }
+    }
+
+    void removeGame(String enterName) {
+        for (int i = 0; i < jocuri.length; i++) {
+            if ((jocuri[i].getNumeJoc()).equals(enterName)) {
+                jocuri[i] = null;
+
+
+                for (int j = 0; j < jocuri.length; j++) {
+                    if (jocuri[j] == null) {
+                        jocuri[j] = jocuri[j + 1];
+                    }
+                }
+
                 break;
 
             }
